@@ -1,0 +1,154 @@
+LIBRARY IEEE;
+USE IEEE.STD_LOGIC_1164.ALL;
+use ieee.numeric_std.all;
+use ieee.std_logic_unsigned.all;
+
+entity uart is
+	port( LED : out std_logic_vector(0 to 7);
+			KEY : in std_logic_vector(0 to 1);
+			CLOCK_50 : in std_logic;
+			gpio : in std_logic_vector(0 to 19);
+			gpioOut : out std_logic_vector(0 to 13);
+			gpio_IN : in std_logic_vector(0 to 1));
+end uart;
+architecture test_arch of uart is
+signal Clk1MHz : std_logic;
+signal Clk10kHz : std_logic;
+signal Clk1000Hz : std_logic;
+signal Clk100Hz : std_logic;
+signal Clk10Hz : std_logic;
+signal Clk1Hz : std_logic;
+signal UartData : std_logic_vector(0 to 7);
+signal UartNewData : std_logic;
+signal TCFlag : std_logic;
+signal keyboardOneHot: std_logic_vector(0 to 15);
+signal keyboardBinary:  std_logic_vector(0 to 4);
+signal keyboardValue:  std_logic_vector(0 to 4);
+signal onesValue, tensValue:  std_logic_vector(0 to 3);
+
+type StateText_t is (Idle, SendState, Release, Repeat, Press, Tens, Ones, TensLast, OnesLast, CR, LF);
+signal StateText : StateText_t := Idle;
+
+signal encoderInput : std_logic_vector(0 to 7);
+
+signal UartDataIn : std_logic_vector(0 to 7);
+signal UartDataInFlag : std_logic;
+signal UartDataInFlagRst : std_logic := '0';
+begin
+------------- KEYBOARD ----------------------------------
+	keyboardMatrice: entity work.keyBoardMatrice(keyBoardMatrice_arch)
+		port map(gpio(0 to 3), gpioOut(0 to 3), keyboardOneHot, clk100Hz);
+	oneHotDecoder: entity work.OneHotToBin(OneHotToBinArch)
+		port map(keyboardOneHot, keyboardBinary);
+		
+		
+	debouncerKeys: entity work.debouncerVector(debouncerVectorArch)
+		port map(keyboardBinary, keyboardValue, Clk1000Hz);
+	LED(0 to 4) <= keyboardValue;
+	LED(5) <= Clk1Hz;
+	encoderInput <= "000" & keyboardValue;
+	BCDCoder: entity work.TwoDigitBinToBCD(TwoDigitBinToBCDArch)
+		port map(encoderInput, tensValue, onesValue);
+	
+	
+------------- UART SEND ----------------------------------	
+	
+	uartModule: entity work.UartSender(UartSenderArch)
+		port map(gpioOut(4), UartData, UartNewData, cloCK_50);
+	
+	process(Clk10kHz) is
+	variable last1, last2 : std_logic_vector(0 to 4) := (others => '0');
+	variable lastFlag1, lastFlag2 : std_logic := '0';
+	variable state : integer := 0;
+	variable next_state : StateText_t := Idle;
+	variable lastTensKey, lastOnesKey : std_logic_vector(0 to 3) := (others => '0');
+	begin
+		if( rising_edge(Clk10kHz) ) then
+			case StateText is
+				when Idle =>
+					last1 := last2;
+					last2 := keyboardValue;
+					lastFlag1 := lastFlag2;
+					lastFlag2 := UartDataInFlag;
+					StateText <= next_state;
+					UartDataInFlagRst <= '0';
+					if ( last1 /= last2 and last2 = "0000") then -- release key
+						StateText <= Release;
+					elsif ( last1 /= last2 and last2 /= "0000") then -- press key
+						StateText <= Press;
+						lastTensKey := tensValue;
+						lastOnesKey := onesValue;
+					elsif ( lastFlag1 /= lastFlag2 and lastFlag2 = '1') then --and lastFlag2 = '1' ) then -- new data 
+						StateText <= Repeat;
+						UartDataInFlagRst <= '1';
+--						StateText <= Press;
+--						lastTensKey := "0011";
+--						lastOnesKey := "0010";
+					end if;
+					UartNewData <= '0';
+				when Release =>
+					UartData <= "01010010";
+					next_state := TensLast;
+					StateText <= SendState;
+				when Press =>
+					UartData <= "01010000";
+					next_state := Tens;
+					StateText <= SendState;
+				when Tens =>
+					UartData <= "0011" & tensValue;
+					next_state := Ones;
+					StateText <= SendState;
+				when Ones =>
+					UartData <= "0011" & onesValue;
+					next_state := CR;
+					StateText <= SendState;
+				when TensLast =>
+					UartData <= "0011" & lastTensKey;
+					next_state := OnesLast;
+					StateText <= SendState;
+				when OnesLast =>
+					UartData <= "0011" & lastOnesKey;
+					next_state := CR;
+					StateText <= SendState;
+				when CR =>
+					UartData <= "00001101";
+					next_state := LF;
+					StateText <= SendState;
+				when LF =>
+					UartData <= "00001010";
+					next_state := Idle;
+					StateText <= SendState;
+				when SendState =>
+					UartNewData <= '1';
+					StateText <= Idle;
+				when Repeat =>
+					UartData <= UartDataIn;
+					next_state := Idle;
+					StateText <= SendState;
+				when Others =>
+					StateText <= Idle;
+					next_state := Idle;
+			end case;
+		end if;
+	end process;
+	
+	
+	gpioOut(6) <= UartDataInFlag;
+	RxUart: entity work.RxTest(RxTest_arch)
+		port map(gpio(4), UartDataIn, UartDataInFlag, UartDataInFlagRst, CLOCK_50, gpioOut(5));
+------------- CLOCKS ----------------------------------
+	
+	pr1M: entity work.prescaler(prescaler_arch)
+		port map(CLOCK_50, Clk1MHz, '0', 50);
+	pr10k: entity work.prescaler(prescaler_arch)
+		port map(Clk1MHz, Clk10kHz, '0', 100);
+	pr1k: entity work.prescaler(prescaler_arch)
+		port map(Clk1MHz, Clk1000Hz, '0', 1000);
+	pr100: entity work.prescaler(prescaler_arch)
+		port map(Clk1000Hz, Clk100Hz, '0', 10);
+	pr10: entity work.prescaler(prescaler_arch)
+		port map(Clk100Hz, Clk10Hz, '0', 10);
+	pr1hz: entity work.prescaler(prescaler_arch)
+		port map(Clk10Hz, Clk1Hz, '0', 10);
+	--LED(7) <= Clk1Hz;
+end;

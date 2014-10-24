@@ -1,0 +1,15 @@
+LIBRARY IEEE;
+USE IEEE.STD_LOGIC_1164.ALL;
+use ieee.numeric_std.all;
+use ieee.std_logic_unsigned.all;
+
+entity TwoDigitBinToBCD is
+	port( input: std_logic_vector(0 to 7); outputTens : std_logic_vector(0 to 3); outputOnes : std_logic_vector(0 to 3) );
+end TwoDigitBinToBCD;
+
+architecture TwoDigitBinToBCDArch of TwoDigitBinToBCD is
+signal valueTens : std_logic_vector(0 to 3);
+signal valueOnes : std_logic_vector(0 to 3);
+begin
+	valueTens <= input/10;
+end architecture;

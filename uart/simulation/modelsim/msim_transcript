@@ -1,0 +1,208 @@
+# Reading G:/Science/Electronics/FPGA/altera/14.0/modelsim_ase/tcl/vsim/pref.tcl 
+# do uart_run_msim_rtl_vhdl.do 
+# if {[file exists rtl_work]} {
+# 	vdel -lib rtl_work -all
+# }
+# vlib rtl_work
+# vmap work rtl_work
+# Copying G:\Science\Electronics\FPGA\altera\14.0\modelsim_ase\win32aloem/../modelsim.ini to modelsim.ini
+# Modifying modelsim.ini
+# ** Warning: Copied G:\Science\Electronics\FPGA\altera\14.0\modelsim_ase\win32aloem/../modelsim.ini to modelsim.ini.
+#          Updated modelsim.ini.
+# 
+# vcom -93 -work work {G:/Dropbox/FPGA/uart/src/presc.vhd}
+# Model Technology ModelSim ALTERA vcom 10.1e Compiler 2013.06 Jun 12 2013
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Loading package std_logic_arith
+# -- Loading package STD_LOGIC_UNSIGNED
+# -- Compiling entity prescaler
+# -- Compiling architecture prescaler_arch of prescaler
+# vcom -93 -work work {G:/Dropbox/FPGA/uart/src/EightBitShiftReg.vhd}
+# Model Technology ModelSim ALTERA vcom 10.1e Compiler 2013.06 Jun 12 2013
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Loading package std_logic_arith
+# -- Loading package STD_LOGIC_UNSIGNED
+# -- Compiling entity EightBitShiftReg
+# -- Compiling architecture EightBitShiftRegArch of EightBitShiftReg
+# vcom -93 -work work {G:/Dropbox/FPGA/uart/src/counter.vhd}
+# Model Technology ModelSim ALTERA vcom 10.1e Compiler 2013.06 Jun 12 2013
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Loading package std_logic_arith
+# -- Loading package STD_LOGIC_UNSIGNED
+# -- Compiling entity counter
+# -- Compiling architecture counter_arch of counter
+# vcom -93 -work work {G:/Dropbox/FPGA/uart/src/OneHot.vhd}
+# Model Technology ModelSim ALTERA vcom 10.1e Compiler 2013.06 Jun 12 2013
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity BinToOneHot
+# -- Compiling architecture BinToOneHotArch of BinToOneHot
+# ** Warning: G:/Dropbox/FPGA/uart/src/OneHot.vhd(12): (vcom-1074) Non-locally static OTHERS choice is allowed only if it is the only choice of the only association.
+# 
+# -- Compiling entity OneHotToBin
+# -- Compiling architecture OneHotToBinArch of OneHotToBin
+# vcom -93 -work work {G:/Dropbox/FPGA/uart/src/keyboard.vhd}
+# Model Technology ModelSim ALTERA vcom 10.1e Compiler 2013.06 Jun 12 2013
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Loading package std_logic_arith
+# -- Loading package STD_LOGIC_UNSIGNED
+# -- Compiling entity keyBoardMatrice
+# -- Compiling architecture keyBoardMatrice_arch of keyBoardMatrice
+# -- Loading entity counter
+# -- Loading entity BinToOneHot
+# vcom -93 -work work {G:/Dropbox/FPGA/uart/src/debouncer.vhd}
+# Model Technology ModelSim ALTERA vcom 10.1e Compiler 2013.06 Jun 12 2013
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity debouncerBit
+# -- Compiling architecture debouncerBitArch of debouncerBit
+# -- Compiling entity debouncerVector
+# -- Compiling architecture debouncerVectorArch of debouncerVector
+# vcom -93 -work work {G:/Dropbox/FPGA/uart/src/UartSender.vhd}
+# Model Technology ModelSim ALTERA vcom 10.1e Compiler 2013.06 Jun 12 2013
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Loading package std_logic_arith
+# -- Loading package STD_LOGIC_UNSIGNED
+# -- Compiling entity TxTest
+# -- Compiling architecture TxTest_arch of TxTest
+# -- Loading entity prescaler
+# -- Compiling entity UartSender
+# -- Compiling architecture UartSenderArch of UartSender
+# -- Loading entity TxTest
+# -- Loading entity EightBitShiftReg
+# -- Compiling entity RxTest
+# -- Compiling architecture RxTest_arch of RxTest
+# vcom -93 -work work {G:/Dropbox/FPGA/uart/src/TwoDigitBinToBCD.vhd}
+# Model Technology ModelSim ALTERA vcom 10.1e Compiler 2013.06 Jun 12 2013
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Loading package std_logic_arith
+# -- Loading package STD_LOGIC_UNSIGNED
+# -- Compiling entity TwoDigitBinToBCD
+# -- Compiling architecture TwoDigitBinToBCDArch of TwoDigitBinToBCD
+# vcom -93 -work work {G:/Dropbox/FPGA/uart/src/uart.vhd}
+# Model Technology ModelSim ALTERA vcom 10.1e Compiler 2013.06 Jun 12 2013
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Loading package std_logic_arith
+# -- Loading package STD_LOGIC_UNSIGNED
+# -- Compiling entity uart
+# -- Compiling architecture test_arch of uart
+# -- Loading entity keyBoardMatrice
+# -- Loading entity OneHotToBin
+# -- Loading entity debouncerVector
+# -- Loading entity TwoDigitBinToBCD
+# -- Loading entity UartSender
+# -- Loading entity RxTest
+# -- Loading entity prescaler
+# 
+# vcom -93 -work work {G:/Dropbox/FPGA/uart/simulation/modelsim/uart.vht}
+# Model Technology ModelSim ALTERA vcom 10.1e Compiler 2013.06 Jun 12 2013
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Compiling entity uart_vhd_tst
+# -- Compiling architecture uart_arch of uart_vhd_tst
+# ** Warning: [4] G:/Dropbox/FPGA/uart/simulation/modelsim/uart.vht(67): (vcom-1207) An abstract literal and an identifier must have a separator between them.
+# ** Warning: [4] G:/Dropbox/FPGA/uart/simulation/modelsim/uart.vht(69): (vcom-1207) An abstract literal and an identifier must have a separator between them.
+# ** Warning: [4] G:/Dropbox/FPGA/uart/simulation/modelsim/uart.vht(75): (vcom-1207) An abstract literal and an identifier must have a separator between them.
+# ** Warning: [4] G:/Dropbox/FPGA/uart/simulation/modelsim/uart.vht(77): (vcom-1207) An abstract literal and an identifier must have a separator between them.
+# ** Warning: [4] G:/Dropbox/FPGA/uart/simulation/modelsim/uart.vht(79): (vcom-1207) An abstract literal and an identifier must have a separator between them.
+# ** Warning: [4] G:/Dropbox/FPGA/uart/simulation/modelsim/uart.vht(81): (vcom-1207) An abstract literal and an identifier must have a separator between them.
+# ** Warning: [4] G:/Dropbox/FPGA/uart/simulation/modelsim/uart.vht(83): (vcom-1207) An abstract literal and an identifier must have a separator between them.
+# ** Warning: [4] G:/Dropbox/FPGA/uart/simulation/modelsim/uart.vht(85): (vcom-1207) An abstract literal and an identifier must have a separator between them.
+# ** Warning: [4] G:/Dropbox/FPGA/uart/simulation/modelsim/uart.vht(87): (vcom-1207) An abstract literal and an identifier must have a separator between them.
+# ** Warning: [4] G:/Dropbox/FPGA/uart/simulation/modelsim/uart.vht(89): (vcom-1207) An abstract literal and an identifier must have a separator between them.
+# ** Warning: [4] G:/Dropbox/FPGA/uart/simulation/modelsim/uart.vht(91): (vcom-1207) An abstract literal and an identifier must have a separator between them.
+# 
+# vsim -t 1ps -L altera -L lpm -L sgate -L altera_mf -L altera_lnsim -L cycloneive -L rtl_work -L work -voptargs="+acc"  test
+# vsim -L altera -L lpm -L sgate -L altera_mf -L altera_lnsim -L cycloneive -L rtl_work -L work -voptargs=\"+acc\" -t 1ps test 
+# ** Error: (vsim-3170) Could not find 'G:/Dropbox/FPGA/uart/simulation/modelsim/rtl_work.test'.
+# 
+# Error loading design
+# Error: Error loading design 
+#        Pausing macro execution 
+# MACRO ./uart_run_msim_rtl_vhdl.do PAUSED at line 20
+vsim work.uart_vhd_tst
+# vsim work.uart_vhd_tst 
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading work.uart_vhd_tst(uart_arch)
+# Loading ieee.numeric_std(body)
+# Loading ieee.std_logic_arith(body)
+# Loading ieee.std_logic_unsigned(body)
+# Loading work.uart(test_arch)
+# Loading work.keyboardmatrice(keyboardmatrice_arch)
+# Loading work.counter(counter_arch)
+# Loading work.bintoonehot(bintoonehotarch)
+# Loading work.onehottobin(onehottobinarch)
+# Loading work.debouncervector(debouncervectorarch)
+# Loading work.twodigitbintobcd(twodigitbintobcdarch)
+# Loading work.uartsender(uartsenderarch)
+# Loading work.txtest(txtest_arch)
+# Loading work.prescaler(prescaler_arch)
+# Loading work.eightbitshiftreg(eightbitshiftregarch)
+# Loading work.rxtest(rxtest_arch)
+# ** Warning: (vsim-8684) No drivers exist on out port /uart_vhd_tst/i1/LED(5 to 7), and its initial value is not used.
+# 
+# Therefore, simulation behavior may occur that is not in compliance with
+# 
+# the VHDL standard as the initial values come from the base signal /uart_vhd_tst/LED(5 to 7).
+# 
+# ** Warning: (vsim-8684) No drivers exist on out port /uart_vhd_tst/i1/gpioOut(6 to 13), and its initial value is not used.
+# 
+# Therefore, simulation behavior may occur that is not in compliance with
+# 
+# the VHDL standard as the initial values come from the base signal /uart_vhd_tst/gpioOut(6 to 13).
+# 
+add wave -position end  sim:/uart_vhd_tst/i1/RxUart/RxPin
+add wave -position end  sim:/uart_vhd_tst/i1/RxUart/data
+add wave -position end  sim:/uart_vhd_tst/i1/RxUart/DataFlag
+add wave -position end  sim:/uart_vhd_tst/i1/RxUart/clk
+add wave -position end  sim:/uart_vhd_tst/i1/RxUart/dbg_wire
+add wave -position end  sim:/uart_vhd_tst/i1/RxUart/State
+add wave -position end  sim:/uart_vhd_tst/i1/RxUart/StateBegin
+add wave -position end  sim:/uart_vhd_tst/i1/RxUart/RxClock
+add wave -position end  sim:/uart_vhd_tst/i1/RxUart/RstCnt
+add wave -position end  sim:/uart_vhd_tst/i1/RxUart/dbg_wire_state
+run
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 0  Instance: /uart_vhd_tst/i1/BCDCoder
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 1  Instance: /uart_vhd_tst/i1/BCDCoder
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run
+run

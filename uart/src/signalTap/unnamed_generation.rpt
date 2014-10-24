@@ -1,0 +1,30 @@
+Info: Starting: Create block symbol file (.bsf)
+Info: ip-generate --project-directory=G:\Dropbox\FPGA\uart --output-directory=G:\Dropbox\FPGA\uart\src\signalTap --report-file=bsf:G:\Dropbox\FPGA\uart\src\signalTap\unnamed.bsf --system-info=DEVICE_FAMILY="Cyclone IV E" --system-info=DEVICE=EP4CE22F17C6 --system-info=DEVICE_SPEEDGRADE=6 --component-file=G:\Dropbox\FPGA\uart\unnamed.qsys
+Progress: Loading uart/unnamed.qsys
+Progress: Reading input file
+Progress: Adding signaltap_ii_logic_analyzer_0 [altera_signaltap_ii_logic_analyzer 14.0]
+Progress: Parameterizing module signaltap_ii_logic_analyzer_0
+Progress: Building connections
+Progress: Parameterizing connections
+Progress: Validating
+Progress: Done reading input file
+Info: unnamed.unnamed: There are recommended upgrades for: signaltap_ii_logic_analyzer_0
+Info: ip-generate succeeded.
+Info: Finished: Create block symbol file (.bsf)
+Info: 
+Info: Starting: Create HDL design files for synthesis
+Info: ip-generate --project-directory=G:\Dropbox\FPGA\uart --output-directory=G:\Dropbox\FPGA\uart\src\signalTap\synthesis --file-set=QUARTUS_SYNTH --report-file=html:G:\Dropbox\FPGA\uart\src\signalTap\unnamed.html --report-file=sopcinfo:G:\Dropbox\FPGA\uart\unnamed.sopcinfo --report-file=cmp:G:\Dropbox\FPGA\uart\src\signalTap\unnamed.cmp --report-file=qip:G:\Dropbox\FPGA\uart\src\signalTap\synthesis\unnamed.qip --report-file=svd:G:\Dropbox\FPGA\uart\src\signalTap\synthesis\unnamed.svd --report-file=regmap:G:\Dropbox\FPGA\uart\src\signalTap\synthesis\unnamed.regmap --report-file=xml:G:\Dropbox\FPGA\uart\src\signalTap\unnamed.xml --report-file=debuginfo:G:\Dropbox\FPGA\uart\src\signalTap\synthesis\unnamed.debuginfo --system-info=DEVICE_FAMILY="Cyclone IV E" --system-info=DEVICE=EP4CE22F17C6 --system-info=DEVICE_SPEEDGRADE=6 --component-file=G:\Dropbox\FPGA\uart\unnamed.qsys --language=VHDL
+Progress: Loading uart/unnamed.qsys
+Progress: Reading input file
+Progress: Adding signaltap_ii_logic_analyzer_0 [altera_signaltap_ii_logic_analyzer 14.0]
+Progress: Parameterizing module signaltap_ii_logic_analyzer_0
+Progress: Building connections
+Progress: Parameterizing connections
+Progress: Validating
+Progress: Done reading input file
+Info: unnamed.unnamed: There are recommended upgrades for: signaltap_ii_logic_analyzer_0
+Info: unnamed: Generating unnamed "unnamed" for QUARTUS_SYNTH
+Info: signaltap_ii_logic_analyzer_0: "unnamed" instantiated altera_signaltap_ii_logic_analyzer "signaltap_ii_logic_analyzer_0"
+Info: unnamed: Done "unnamed" with 2 modules, 1 files
+Info: ip-generate succeeded.
+Info: Finished: Create HDL design files for synthesis

@@ -1,0 +1,179 @@
+#============================================================
+# Build by Terasic System Builder
+#============================================================
+
+set_global_assignment -name FAMILY "Cyclone IV E"
+set_global_assignment -name DEVICE EP4CE22F17C6
+set_global_assignment -name TOP_LEVEL_ENTITY uart
+set_global_assignment -name ORIGINAL_QUARTUS_VERSION "12.0"
+set_global_assignment -name LAST_QUARTUS_VERSION 14.0
+set_global_assignment -name PROJECT_CREATION_TIME_DATE "22:49:22 SEPTEMBER 29,2014"
+set_global_assignment -name DEVICE_FILTER_PACKAGE FBGA
+set_global_assignment -name DEVICE_FILTER_PIN_COUNT 256
+set_global_assignment -name DEVICE_FILTER_SPEED_GRADE 6
+
+#============================================================
+# CLOCK
+#============================================================
+set_location_assignment PIN_R8 -to CLOCK_50
+
+#============================================================
+# LED
+#============================================================
+set_location_assignment PIN_A15 -to LED[0]
+set_location_assignment PIN_A13 -to LED[1]
+set_location_assignment PIN_B13 -to LED[2]
+set_location_assignment PIN_A11 -to LED[3]
+set_location_assignment PIN_D1 -to LED[4]
+set_location_assignment PIN_F3 -to LED[5]
+set_location_assignment PIN_B1 -to LED[6]
+set_location_assignment PIN_L3 -to LED[7]
+
+#============================================================
+# KEY
+#============================================================
+set_location_assignment PIN_J15 -to KEY[0]
+set_location_assignment PIN_E1 -to KEY[1]
+
+#============================================================
+# SW
+#============================================================
+set_location_assignment PIN_M1 -to SW[0]
+set_location_assignment PIN_T8 -to SW[1]
+set_location_assignment PIN_B9 -to SW[2]
+set_location_assignment PIN_M15 -to SW[3]
+
+#============================================================
+# GPIO_0, GPIO_0 connect to GPIO Default
+#============================================================
+set_location_assignment PIN_A8 -to gpio_IN[0]
+set_location_assignment PIN_D3 -to gpio[0]
+set_location_assignment PIN_B8 -to gpio_IN[1]
+set_location_assignment PIN_C3 -to gpio[1]
+set_location_assignment PIN_A2 -to gpio[2]
+set_location_assignment PIN_A3 -to gpio[3]
+set_location_assignment PIN_B3 -to gpio[4]
+set_location_assignment PIN_B4 -to gpio[5]
+set_location_assignment PIN_A4 -to gpio[6]
+set_location_assignment PIN_B5 -to gpio[7]
+set_location_assignment PIN_A5 -to gpio[8]
+set_location_assignment PIN_D5 -to gpio[9]
+set_location_assignment PIN_B6 -to gpio[10]
+set_location_assignment PIN_A6 -to gpio[11]
+set_location_assignment PIN_B7 -to gpio[12]
+set_location_assignment PIN_D6 -to gpio[13]
+set_location_assignment PIN_A7 -to gpio[14]
+set_location_assignment PIN_C6 -to gpio[15]
+set_location_assignment PIN_C8 -to gpio[16]
+set_location_assignment PIN_E6 -to gpio[17]
+set_location_assignment PIN_E7 -to gpio[18]
+set_location_assignment PIN_D8 -to gpio[19]
+
+#============================================================
+# End of pin assignments by Terasic System Builder
+#============================================================
+
+
+set_global_assignment -name MIN_CORE_JUNCTION_TEMP 0
+set_global_assignment -name MAX_CORE_JUNCTION_TEMP 85
+set_global_assignment -name POWER_PRESET_COOLING_SOLUTION "23 MM HEAT SINK WITH 200 LFPM AIRFLOW"
+set_global_assignment -name POWER_BOARD_THERMAL_MODEL "NONE (CONSERVATIVE)"
+set_global_assignment -name EDA_SIMULATION_TOOL "ModelSim-Altera (VHDL)"
+set_global_assignment -name EDA_OUTPUT_DATA_FORMAT VHDL -section_id eda_simulation
+set_global_assignment -name EDA_GENERATE_FUNCTIONAL_NETLIST ON -section_id eda_simulation
+set_global_assignment -name EDA_TEST_BENCH_ENABLE_STATUS TEST_BENCH_MODE -section_id eda_simulation
+set_global_assignment -name EDA_NATIVELINK_SIMULATION_TEST_BENCH test -section_id eda_simulation
+set_global_assignment -name EDA_TEST_BENCH_NAME test -section_id eda_simulation
+set_global_assignment -name EDA_DESIGN_INSTANCE_NAME NA -section_id test
+set_global_assignment -name EDA_TEST_BENCH_MODULE_NAME test -section_id test
+set_global_assignment -name SEARCH_PATH "c:\\users\\rexina\\dropbox\\fpga\\uart\\src"
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to gpio[12] -disable
+set_global_assignment -name STRATIX_DEVICE_IO_STANDARD "2.5 V"
+set_location_assignment PIN_E8 -to gpioOut[0]
+set_location_assignment PIN_F8 -to gpioOut[1]
+set_location_assignment PIN_F9 -to gpioOut[2]
+set_location_assignment PIN_E9 -to gpioOut[3]
+set_location_assignment PIN_C9 -to gpioOut[4]
+set_location_assignment PIN_D9 -to gpioOut[5]
+set_location_assignment PIN_E11 -to gpioOut[6]
+set_location_assignment PIN_E10 -to gpioOut[7]
+set_location_assignment PIN_C11 -to gpioOut[8]
+set_location_assignment PIN_B11 -to gpioOut[9]
+set_location_assignment PIN_A12 -to gpioOut[10]
+set_location_assignment PIN_D11 -to gpioOut[11]
+set_location_assignment PIN_D12 -to gpioOut[12]
+set_location_assignment PIN_B12 -to gpioOut[13]
+set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
+set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
+set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to CLOCK_50
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to LED[0]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to LED[1]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to LED[2]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to LED[3]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to LED[4]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to LED[5]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to LED[6]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to LED[7]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to KEY[0]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to KEY[1]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SW[0]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SW[1]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SW[2]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SW[3]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to gpio_IN[0]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to gpio[0]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to gpio_IN[1]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to gpio[1]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to gpio[2]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to gpio[3]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to gpio[4]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to gpio[5]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to gpio[6]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to gpio[7]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to gpio[8]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to gpio[9]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to gpio[10]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to gpio[11]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to gpio[13]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to gpio[14]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to gpio[15]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to gpio[16]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to gpio[17]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to gpio[18]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to gpio[19]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to gpioOut[0]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to gpioOut[1]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to gpioOut[2]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to gpioOut[3]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to gpioOut[4]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to gpioOut[5]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to gpioOut[6]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to gpioOut[7]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to gpioOut[8]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to gpioOut[9]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to gpioOut[10]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to gpioOut[11]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to gpioOut[12]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to gpioOut[13]
+set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to gpio[0]
+set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to gpio[1]
+set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to gpio[2]
+set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to gpio[3]
+set_global_assignment -name EDA_TEST_BENCH_FILE simulation/modelsim/uart.vht -section_id test
+set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
+set_global_assignment -name VHDL_FILE src/signalTap/synthesis/unnamed.vhd
+set_global_assignment -name QIP_FILE src/signalTap/synthesis/unnamed.qip
+set_global_assignment -name SDC_FILE uart.SDC
+set_global_assignment -name VHDL_FILE src/presc.vhd
+set_global_assignment -name VHDL_FILE src/EightBitShiftReg.vhd
+set_global_assignment -name VHDL_FILE src/counter.vhd
+set_global_assignment -name VHDL_FILE src/OneHot.vhd
+set_global_assignment -name VHDL_FILE src/keyboard.vhd
+set_global_assignment -name VHDL_FILE src/debouncer.vhd
+set_global_assignment -name VHDL_FILE src/UartSender.vhd
+set_global_assignment -name VHDL_FILE src/TwoDigitBinToBCD.vhd
+set_global_assignment -name VHDL_TEST_BENCH_FILE src/main.vht
+set_global_assignment -name VHDL_FILE src/uart.vhd
+set_global_assignment -name QIP_FILE src/fifo.qip
+set_global_assignment -name VHDL_FILE src/fifo.vhd

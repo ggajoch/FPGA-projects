@@ -1,0 +1,233 @@
+LIBRARY IEEE;
+USE IEEE.STD_LOGIC_1164.ALL;
+use ieee.numeric_std.all;
+use ieee.std_logic_unsigned.all;
+
+entity TxTest is
+	port( TxPin : out std_logic;
+			Data : in std_logic_vector(0 to 7);
+			DataFlag : in std_logic;
+			TC : out std_logic;
+			clk : in std_logic);
+end TxTest;
+architecture TxTest_arch of TxTest is
+type State_t is (Idle, Capture, Send);
+signal State : State_t;
+signal TxClock : std_logic := '0';
+signal last_flags : std_logic_vector(0 to 1);
+begin
+	presc0 : entity work.prescaler(prescaler_arch)
+		--generic map(NBit => 16, presc => 5208)
+		port map(clk, TxClock, '0', 54);
+	
+	process(TxClock, DataFlag) is
+	variable DataRegister : std_logic_vector(0 to 7);
+	variable BitsLeft : natural := 0;
+	begin
+		if( rising_edge(TxClock) ) then
+			last_flags(0) <= DataFlag;
+			last_flags(1) <= last_flags(0);
+			
+			if( last_flags(0) /= last_flags(1) and DataFlag = '1' ) then -- event on flag
+				State <= Capture;
+			end if;
+			TC <= '0';
+			case State is
+				when Idle =>
+					TxPin <= '1';
+					TC <= '1';
+				when Capture =>
+					DataRegister := Data;
+					State <= Send;
+					BitsLeft := 10;
+				when Send =>
+					if( BitsLeft = 10 ) then
+						--start bit
+						TxPin <= '0';
+					elsif( BitsLeft >= 2 ) then
+						TxPin <= DataRegister(BitsLeft-2);
+					elsif( BitsLeft = 1 ) then
+						TxPin <= '1';
+					else
+						State <= Idle;
+					end if;
+					
+					if( BitsLeft > 0 ) then
+						BitsLeft := BitsLeft-1;
+					end if;
+				when others =>
+					State <= Idle;
+			end case;
+		end if;
+	end process;
+end;
+
+------------------------------ TX CONTROL --------------------------------------
+
+LIBRARY IEEE;
+USE IEEE.STD_LOGIC_1164.ALL;
+use ieee.numeric_std.all;
+use ieee.std_logic_unsigned.all;
+
+entity UartSender is
+	port( TxPin : out std_logic;
+			Din : in std_logic_vector(0 to 7);
+			DataFlag : in std_logic;
+			clk : in std_logic);
+end UartSender;
+
+architecture UartSenderArch of UartSender is
+signal InputData : std_logic_vector(0 to 7);
+signal BufDin : std_logic_vector(0 to 7);
+signal BufDataFlag : std_logic := '0';
+signal BufEmpty: std_logic;
+signal BufDout : std_logic_vector(0 to 7);
+signal BufPopData : std_logic := '0';
+type StateBuf_t is (Idle, PushLoad, PushLatch);
+signal StateBuf : StateBuf_t;
+
+signal UartData : std_logic_vector(0 to 7);
+signal UartNewData : std_logic;
+signal TCFlag : std_logic;
+type StateSend_t is (Idle, LoadData, LatchData, WaitForOne, WaitForZero, RstFlag);
+signal StateSend : StateSend_t;
+begin
+
+	uartSender: entity work.TxTest(TxTest_arch)
+		port map(TxPin, UartData, UartNewData, TCFlag, clk);
+		
+	buffer1: entity work.EightBitShiftReg(EightBitShiftRegArch)
+		port map(BufDin, 
+					BufDataFlag,
+					BufEmpty,
+					BufDout,
+					BufPopData,
+					clk);
+					
+	process(clk, DataFlag) is
+	variable WasFlagZero : std_logic := '0';
+	begin
+		if( DataFlag = '1' and WasFlagZero = '1' and StateBuf = Idle) then
+			WasFlagZero := '0';
+			InputData <= Din;
+			StateBuf <= PushLoad;
+		elsif( clk'event and clk = '1' ) then
+			if( DataFlag = '0' ) then
+				WasFlagZero := '1';
+			end if;
+			case StateBuf is 
+				when Idle =>
+					null;
+				when PushLoad =>
+					BufDin <= InputData;
+					BufDataFlag <= '0';
+					StateBuf <= PushLatch;
+				when PushLatch =>
+					BufDataFlag <= '1';
+					StateBuf <= Idle;
+				when others =>
+					StateBuf <= Idle;
+			end case;
+		end if;
+	end process;
+	
+	process(clk) is
+	begin
+		if( rising_edge(clk) ) then
+			case StateSend is
+				when Idle =>
+					BufPopData <= '0';
+					UartNewData <= '0';
+					if( BufEmpty = '0' ) then -- buffer not empty
+						StateSend <= LoadData;
+					end if;
+				when LoadData =>
+					UartData <= BufDout;
+					StateSend <= LatchData;
+				when LatchData =>
+					BufPopData <= '1';
+					UartNewData <= '1';
+					StateSend <= WaitForZero;
+				when WaitForZero =>
+					if( TCFlag = '0' ) then
+						StateSend <= WaitForOne;
+					end if;
+				when WaitForOne =>
+					if( TCFlag = '1' ) then
+						StateSend <= Idle;
+					end if;
+				when Others => 
+					StateSend <= Idle;
+			end case;
+		end if;
+	end process;
+	
+end architecture;
+
+--------------------------------------------------------------------
+
+
+LIBRARY IEEE;
+USE IEEE.STD_LOGIC_1164.ALL;
+use ieee.numeric_std.all;
+use ieee.std_logic_unsigned.all;
+
+entity RxTest is
+	port( RxPin : in std_logic;
+			data : out std_logic_vector(0 to 7);
+			DataFlag : out std_logic;
+			DataFlagRst : in std_logic;
+			clk : in std_logic;
+			dbg_wire : out std_logic);
+end RxTest;
+architecture RxTest_arch of RxTest is
+type State_t is (Idle, StartBit, Capture, NearChange, StopBit);
+signal State : State_t;
+signal StateBegin : State_t;
+signal RxClock : std_logic;
+signal RstCnt : std_logic := '0';
+
+signal dbg_wire_state : std_logic := '0';
+begin
+	
+	presc0 : entity work.prescaler(prescaler_arch)
+		port map(clk, RxClock, RstCnt, 25);--27 > 2604);
+	
+	process(DataFlagRst, RxPin, RxClock) is
+	variable BitsLeft : natural := 0;
+	begin
+		if( DataFlagRst = '1' ) then 
+			DataFlag <= '0';
+		elsif( RxPin = '0' and State = Idle ) then
+			RstCnt <= '0';
+			State <= StartBit;
+		elsif( rising_edge(RxClock) ) then
+			case State is
+				when Idle =>
+					RstCnt <= '1';
+				when StartBit =>
+					--DataFlag <= '0';
+					RstCnt <= '0';
+					State <= NearChange;
+					BitsLeft := 8;
+				when Capture =>
+					if( BitsLeft > 0 ) then
+						dbg_wire <= dbg_wire_state;
+						dbg_wire_state <= not dbg_wire_state;
+						Data(BitsLeft-1) <= RxPin;
+						BitsLeft := BitsLeft-1;
+						State <= NearChange;
+					else
+						State <= StopBit;
+					end if;
+				when NearChange =>
+					State <= Capture;
+				when StopBit =>
+					State <= Idle;
+					DataFlag <= '1';
+				when others =>
+					State <= Idle;
+			end case;
+		end if;
+	end process;
+end architecture;
